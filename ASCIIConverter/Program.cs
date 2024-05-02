@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using ASCIIConverter;
+using System.Drawing;
+
+Console.WindowHeight = Console.LargestWindowHeight;
+Console.WindowWidth = Console.LargestWindowWidth;
+
+var bitmap = (Bitmap)Image.FromFile(@"C:\Users\prost\source\repos\ASCIIConverter\ASCIIConverter\test.jpg");
+var converter = new Converter();
+var graphics = new ASCIIConverter.Graphics(bitmap.Width, bitmap.Height);
+graphics.SetBuffer(converter.GetBufferFromBitmap(bitmap));
+graphics.Draw();
+Console.ReadLine();
