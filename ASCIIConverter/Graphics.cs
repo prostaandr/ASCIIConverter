@@ -11,12 +11,16 @@ namespace ASCIIConverter
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public float Aspect { get; private set; }
+        public float PixelAspect { get; private set; }
         public char[] Buffer { get; private set; }
 
         public Graphics(int width, int height)
         {
             Width = width;
             Height = height;
+            Aspect = (float)width / (float)height;
+            PixelAspect = 11f / 24f;
             Buffer = new char[width * width / height * height];
         }
 

@@ -9,35 +9,32 @@ namespace ASCIIConverter
 {
     public class Converter
     {
-        public char[] GetBufferFromBitmap(Bitmap bitmap)
+        public char[] GetBufferFromBitmap(Bitmap bitmap, int newHeight, Graphics graphics)
         {
-            bitmap = ResizeBitmap(bitmap);
+            bitmap = ResizeBitmap(bitmap, newHeight, graphics.Aspect, graphics.PixelAspect);
             var buffer = new char[bitmap.Width * bitmap.Height];
-            for (int x = 0; x < bitmap.Width; x++)
+            for (int i = 0; i < bitmap.Width; i++)
             {
-                for (int y = 0; y < bitmap.Height; y++)
+                for (int j = 0; j < bitmap.Height; j++)
                 {
-                    var pixel = bitmap.GetPixel(x, y);
-                    if (x == bitmap.Width - 1) buffer[x + y * bitmap.Width] = '\n';
-                    else buffer[x + y * bitmap.Width] = GetColorChar(pixel);
+                    var pixel = bitmap.GetPixel(i, j);
+                    if (i == bitmap.Width - 1) buffer[i + j * bitmap.Width] = '\n';
+                    else buffer[i + j * bitmap.Width] = GetColorChar(pixel);
                 }
             }
 
             return buffer;
         }
 
-        private Bitmap ResizeBitmap(Bitmap bitmap)
+        private Bitmap ResizeBitmap(Bitmap bitmap, int newHeight, float aspect, float pixelAspect)
         {
-            var newHeight = bitmap.Height / 1 * 200 / bitmap.Width;
-            if (bitmap.Width > 200 || bitmap.Height > newHeight)
-                bitmap = new Bitmap(bitmap, new Size(200 * 2, (int)newHeight));
-            return bitmap;
+            return new Bitmap(bitmap, new Size((int)(bitmap.Width * aspect * pixelAspect), newHeight));
         }
 
         private char GetColorChar(Color pixel)
         {
-            if (pixel.R == 255 && pixel.G == 255 && pixel.R == 255) return '*';
-            if (pixel.R == 0 && pixel.G == 0 && pixel.R == 0) return ' ';
+            if (pixel.R == 255 && pixel.G == 255 && pixel.B == 255) return '*';
+            if (pixel.R == 0 && pixel.G == 0 && pixel.B == 0) return ' ';
             return 'E';
         }
     }
