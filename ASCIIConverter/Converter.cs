@@ -34,9 +34,8 @@ namespace ASCIIConverter
 
         private char GetColorChar(Color pixel)
         {
-            if (pixel.R == 255 && pixel.G == 255 && pixel.B == 255) return '*';
-            if (pixel.R == 0 && pixel.G == 0 && pixel.B == 0) return ' ';
-            return 'E';
+            var possibleChars = new char[] { ' ', '.', '*', '#', '%', '@' };
+            return possibleChars[Convert.ToInt32(pixel.GetBrightness() * (possibleChars.Length - 1))];
         }
     }
 }
