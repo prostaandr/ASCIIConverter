@@ -28,7 +28,7 @@ namespace ASCIIConverter
 
         private Bitmap ResizeBitmap(Bitmap bitmap, int newHeight, float aspect, float pixelAspect)
         {
-            return new Bitmap(bitmap, new Size((int)(bitmap.Width * aspect * pixelAspect), newHeight));
+            return new Bitmap(bitmap, new Size((int)(newHeight * aspect / pixelAspect), newHeight));
         }
 
         private char GetColorChar(Color pixel)
