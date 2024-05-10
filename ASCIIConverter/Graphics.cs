@@ -9,19 +9,15 @@ namespace ASCIIConverter
 {
     public class Graphics
     {
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public float Aspect { get; private set; }
         public float PixelAspect { get; private set; }
         public char[] Buffer { get; private set; }
 
-        public Graphics(int width, int height)
+        private Converter _converter = new Converter();
+
+        public Graphics()
         {
-            Width = width;
-            Height = height;
-            Aspect = (float)width / (float)height;
             PixelAspect = 11f / 24f;
-            Buffer = new char[width * width / height * height];
+            Buffer = new char[0];
         }
 
         public void ResetCursor()
@@ -29,21 +25,9 @@ namespace ASCIIConverter
             Console.SetCursorPosition(0, 0);
         }
 
-        public void Reset()
+        public void SetBuffer(Bitmap bitmap, int newHeight)
         {
-            ResetCursor();
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    Buffer[x + y * Width] = ' ';
-                }
-            }
-        }
-
-        public void SetBuffer(char[] buffer)
-        {
-            Buffer = buffer;
+            Buffer = _converter.GetBufferFromBitmap(bitmap, newHeight, PixelAspect);
         }
 
         public void Draw()

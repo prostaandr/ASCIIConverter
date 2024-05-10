@@ -9,9 +9,10 @@ namespace ASCIIConverter
 {
     public class Converter
     {
-        public char[] GetBufferFromBitmap(Bitmap bitmap, int newHeight, Graphics graphics)
+        public char[] GetBufferFromBitmap(Bitmap bitmap, int newHeight, float pixelAspect)
         {
-            bitmap = ResizeBitmap(bitmap, newHeight, graphics.Aspect, graphics.PixelAspect);
+            float aspect = (float)bitmap.Width / (float)bitmap.Height;
+            bitmap = ResizeBitmap(bitmap, newHeight, aspect, pixelAspect);
             var buffer = new char[bitmap.Width * bitmap.Height];
             for (int i = 0; i < bitmap.Width; i++)
             {
