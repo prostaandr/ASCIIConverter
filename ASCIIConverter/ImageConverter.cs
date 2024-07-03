@@ -7,13 +7,29 @@ using System.Threading.Tasks;
 
 namespace ASCIIConverter
 {
-    public class Converter
+    public class ImageConverter
     {
-        public char[] GetBufferFromBitmap(Bitmap bitmap, int newHeight, float pixelAspect)
+        private ImageToConvert imageToConvert;
+        private char[] buffer;
+
+        public void SetNewImage(ImageToConvert imageToConvert)
         {
-            float aspect = (float)bitmap.Width / (float)bitmap.Height;
-            bitmap = ResizeBitmap(bitmap, newHeight, aspect, pixelAspect);
-            var buffer = new char[bitmap.Width * bitmap.Height];
+            this.imageToConvert = imageToConvert;
+            var bufferSize = imageToConvert.Bitmap.Width * imageToConvert.Bitmap.Height;
+            buffer = new char[bufferSize];
+        }
+
+        public char[] GetBuffer(ImageToConvert imageToConvert)
+        {
+            SetNewImage(imageToConvert);
+            CheckNullImage();
+            FillBuffer();
+            return buffer;
+        }
+
+        private void FillBuffer()
+        {
+            var bitmap = imageToConvert.Bitmap;
             for (int i = 0; i < bitmap.Width; i++)
             {
                 for (int j = 0; j < bitmap.Height; j++)
@@ -23,13 +39,11 @@ namespace ASCIIConverter
                     else buffer[i + j * bitmap.Width] = GetColorChar(pixel);
                 }
             }
-
-            return buffer;
         }
 
-        private Bitmap ResizeBitmap(Bitmap bitmap, int newHeight, float aspect, float pixelAspect)
+        private void CheckNullImage()
         {
-            return new Bitmap(bitmap, new Size((int)(newHeight * aspect / pixelAspect), newHeight));
+            if (imageToConvert is null) throw new NullReferenceException("Converter Image is null");
         }
 
         private char GetColorChar(Color pixel)

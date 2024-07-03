@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace ASCIIConverter
 {
-    public class Graphics
+    public class ConsoleDrawer
     {
         public float PixelAspect { get; private set; }
-        public char[] Buffer { get; private set; }
+        public char[] Buffer { get; private set; } 
 
-        private Converter _converter = new Converter();
+        private ImageConverter _converter;
 
-        public Graphics()
+        public ConsoleDrawer()
         {
             PixelAspect = 11f / 24f;
             Buffer = new char[0];
+            _converter = new ImageConverter();
         }
 
         public void ResetCursor()
@@ -25,9 +26,9 @@ namespace ASCIIConverter
             Console.SetCursorPosition(0, 0);
         }
 
-        public void SetBuffer(Bitmap bitmap, int newHeight)
+        public void SetBuffer(ImageToConvert imageToConvert)
         {
-            Buffer = _converter.GetBufferFromBitmap(bitmap, newHeight, PixelAspect);
+            Buffer = _converter.GetBuffer(imageToConvert);
         }
 
         public void Draw()

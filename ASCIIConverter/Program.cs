@@ -1,11 +1,10 @@
 ﻿using ASCIIConverter;
-using System.Drawing;
 
 Console.WindowHeight = Console.LargestWindowHeight;
 Console.WindowWidth = Console.LargestWindowWidth;
 
-var bitmap = (Bitmap)Image.FromFile(@"C:\Users\prost\source\repos\ASCIIConverter\ASCIIConverter\test.jpg");
-var graphics = new ASCIIConverter.Graphics();
-graphics.SetBuffer(bitmap, 200);
-graphics.Draw();
+var drawer = new ConsoleDrawer();
+var image = new ImageToConvert(@"C:\Users\prost\source\repos\ASCIIConverter\ASCIIConverter\test.jpg", 150, drawer.PixelAspect);
+drawer.SetBuffer(image);
+drawer.Draw();
 Console.ReadLine();
