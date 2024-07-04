@@ -9,14 +9,14 @@ namespace ASCIIConverter
 {
     public class ImageConverter
     {
-        private ImageToConvert imageToConvert;
-        private char[] buffer;
+        private ImageToConvert _imageToConvert;
+        private char[] _buffer;
 
         public void SetNewImage(ImageToConvert imageToConvert)
         {
-            this.imageToConvert = imageToConvert;
+            _imageToConvert = imageToConvert;
             var bufferSize = imageToConvert.Bitmap.Width * imageToConvert.Bitmap.Height;
-            buffer = new char[bufferSize];
+            _buffer = new char[bufferSize];
         }
 
         public char[] GetBuffer(ImageToConvert imageToConvert)
@@ -24,26 +24,26 @@ namespace ASCIIConverter
             SetNewImage(imageToConvert);
             CheckNullImage();
             FillBuffer();
-            return buffer;
+            return _buffer;
         }
 
         private void FillBuffer()
         {
-            var bitmap = imageToConvert.Bitmap;
+            var bitmap = _imageToConvert.Bitmap;
             for (int i = 0; i < bitmap.Width; i++)
             {
                 for (int j = 0; j < bitmap.Height; j++)
                 {
                     var pixel = bitmap.GetPixel(i, j);
-                    if (i == bitmap.Width - 1) buffer[i + j * bitmap.Width] = '\n';
-                    else buffer[i + j * bitmap.Width] = GetColorChar(pixel);
+                    if (i == bitmap.Width - 1) _buffer[i + j * bitmap.Width] = '\n';
+                    else _buffer[i + j * bitmap.Width] = GetColorChar(pixel);
                 }
             }
         }
 
         private void CheckNullImage()
         {
-            if (imageToConvert is null) throw new NullReferenceException("Converter Image is null");
+            if (_imageToConvert is null) throw new NullReferenceException("Converter Image is null");
         }
 
         private char GetColorChar(Color pixel)

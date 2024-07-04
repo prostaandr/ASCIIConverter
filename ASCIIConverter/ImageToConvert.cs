@@ -11,20 +11,20 @@ namespace ASCIIConverter
     public class ImageToConvert
     {
         public Bitmap Bitmap { get; private set; }
-        private float aspect;
-        private int newHeight;
+        private float _aspect;
+        private int _newHeight;
 
         public ImageToConvert(string imagePath, int newHeight, float pixelAspect)
         {
             Bitmap = (Bitmap)Image.FromFile(imagePath);
-            aspect = (float)Bitmap.Width / (float)Bitmap.Height;
-            this.newHeight = newHeight;
+            _aspect = (float)Bitmap.Width / (float)Bitmap.Height;
+            _newHeight = newHeight;
             ResizeBitmapByNewHeight(pixelAspect);
         }
 
         private void ResizeBitmapByNewHeight(float pixelAspect)
         {
-            Bitmap = new Bitmap(Bitmap, new Size((int)(newHeight * aspect / pixelAspect), newHeight));
+            Bitmap = new Bitmap(Bitmap, new Size((int)(_newHeight * _aspect / pixelAspect), _newHeight));
         }
     }
 }
