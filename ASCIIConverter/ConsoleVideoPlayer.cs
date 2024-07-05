@@ -9,23 +9,31 @@ namespace ASCIIConverter
     public class ConsoleVideoPlayer
     {
         public string FolderPath { get; private set; }
-        private ConsoleDrawer _consoleDrawer;
         private int _newHeight;
         private int _fps;
+        private ConsoleDrawer _consoleDrawer;
 
         public ConsoleVideoPlayer(string folderPath)
         {
             FolderPath = folderPath;
-            _consoleDrawer = new ConsoleDrawer();
             _newHeight = 150;
             _fps = 60;
+            _consoleDrawer = new ConsoleDrawer();
         }
 
-        public ConsoleVideoPlayer(string folderPath, int fps)
+        public ConsoleVideoPlayer(string folderPath, int height)
+        {
+            FolderPath = folderPath;
+            _newHeight = height;
+            _fps = 60;
+            _consoleDrawer = new ConsoleDrawer();
+        }
+
+        public ConsoleVideoPlayer(string folderPath, int height, int fps)
         {
             FolderPath = folderPath;
             _consoleDrawer = new ConsoleDrawer();
-            _newHeight = 150;
+            _newHeight = height;
             _fps = fps;
         }
 
