@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace ASCIIConverter
 {
@@ -15,7 +10,7 @@ namespace ASCIIConverter
         public void SetNewImage(ImageToConvert imageToConvert)
         {
             _imageToConvert = imageToConvert;
-            var bufferSize = imageToConvert.Bitmap.Width * imageToConvert.Bitmap.Height;
+            var bufferSize = _imageToConvert.Bitmap.Width * _imageToConvert.Bitmap.Height;
             _buffer = new char[bufferSize];
         }
 
@@ -30,6 +25,7 @@ namespace ASCIIConverter
         private void FillBuffer()
         {
             var bitmap = _imageToConvert.Bitmap;
+
             for (int i = 0; i < bitmap.Width; i++)
             {
                 for (int j = 0; j < bitmap.Height; j++)
@@ -39,6 +35,7 @@ namespace ASCIIConverter
                     else _buffer[i + j * bitmap.Width] = GetColorChar(pixel);
                 }
             }
+            
         }
 
         private void CheckNullImage()
